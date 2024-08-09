@@ -4,23 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-   await fetch("http://localhost:8000/users")
+    fetch("http://localhost:8000/users")
       .then((response) => response.json())
       .then((data) => {
-        // Find the user by email
         const user = data.find((user) => user.email === email);
 
-        // Simulate password verification
         if (user && user.password === password) {
+          // Store user info in localStorage
+          localStorage.setItem("user", JSON.stringify(user));
           alert("Login successful!");
-          navigate("/home"); // Navigate to the home page
+          navigate("/home");
         } else {
           alert("Invalid email or password.");
         }
@@ -67,7 +65,7 @@ const Login = () => {
             Don't have an account? Go to Signup
           </Link>
         </form>
-      </div>  
+      </div>
     </div>
   );
 };

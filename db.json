@@ -13,6 +13,13 @@
       "email": "kirubelmenberu35@gmail.com",
       "password": "kirubel123",
       "ConfirmPassword": "kirubel123"
+    },
+    {
+      "id": "d1f0",
+      "Fullname": "eyerus",
+      "email": "eye@gmail.com",
+      "password": "eye123456",
+      "ConfirmPassword": "eye123456"
     }
   ]
 }
