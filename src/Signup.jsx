@@ -10,8 +10,8 @@ import { z } from "zod";
 const schema = z.object({
   Fullname: z.string().min(2).max(20, "First name must be between 2 and 20 characters"),
   email: z.string().email("Invalid email address"),
-  password: z.string().min(8).max(20, "Password must be between 8 and 20 characters"),
-  ConfirmPassword: z.string().min(8).max(20, "Confirm Password must be between 8 and 20 characters"),
+  password: z.string().min(4).max(20, "Password must be between 8 and 20 characters"),
+  ConfirmPassword: z.string().min(4).max(20, "Confirm Password must be between 8 and 20 characters"),
 }).refine(data => data.password === data.ConfirmPassword, {
   message: "Passwords do not match",
   path: ["ConfirmPassword"], // Path to the error
@@ -34,7 +34,6 @@ const Signup = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         navigate("/"); // Redirect after successful registration
       })
       .catch((error) => {

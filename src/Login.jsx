@@ -1,3 +1,4 @@
+import { UserIcon } from "@heroicons/react/16/solid";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -10,27 +11,35 @@ const Login = () => {
     e.preventDefault();
 
     fetch("http://localhost:8000/users")
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        const user = data.find((user) => user.email === email);
-
-        if (user && user.password === password) {
+        const users = data.find((user) => user.email === email && user.password===password);
+      
+        if  ( users && users.password === password && users.password === "kirubel123" &&  users.email === email && users.email === "kirubelmenberu35@gmail.com") {
+ navigate("/admin")
+        }else{
+         users && navigate("/home");
+        }
+        
+        if (users && users.password === password) {
           // Store user info in localStorage
-          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("user", JSON.stringify(users));
           alert("Login successful!");
-          navigate("/home");
         } else {
           alert("Invalid email or password.");
         }
-      })
+      }
+    )
       .catch((error) => console.error("Error:", error));
   };
 
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-gradient-to-r from-blue-500 to-purple-500">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Login</h2>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <div className="flex mx-auto items-center justify-center mb-6">
+          <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
+          <UserIcon className="h-6 w-6 text-gray-500 ml-2" />
+        </div>        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label className="text-gray-600 mb-1" htmlFor="email">Email:</label>
             <input
@@ -45,6 +54,7 @@ const Login = () => {
 
           <div className="flex flex-col">
             <label className="text-gray-600 mb-1" htmlFor="password">Password:</label>
+            
             <input
               type="password"
               id="password"
@@ -61,7 +71,7 @@ const Login = () => {
           >
             Login
           </button>
-          <Link to={"/signup"} className="text-[12px]">
+          <Link to={"/signup"} className="text-[12px] text-blue-600">
             Don't have an account? Go to Signup
           </Link>
         </form>
